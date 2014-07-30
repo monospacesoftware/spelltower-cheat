@@ -375,10 +375,10 @@ public class SpellCheat
     
     private int calcValue()
     {
-      String word = toWord();
-      System.out.println();
-      System.out.println("Calculating value of " + word);
-      System.out.println(toString());
+//      String word = toWord();
+//      System.out.println();
+//      System.out.println("Calculating value of " + word);
+//      System.out.println(toString());
       
       int columns = _tower.getWidth();
       int len = this.size();
@@ -387,37 +387,37 @@ public class SpellCheat
       HashSet<Box> bonusBoxes = new HashSet<Box>();
 
       for(Box box : this.getBoxes()) {
-        System.out.println(box);
+//        System.out.println(box);
         
         acc += box.getValue();
       
         if (len > 4) {
           Box north = _tower.getAdjacent(box, Adjacent.TM);
           if (north != null && north.hasValue()) {
-            if (bonusBoxes.add(north)) 
-              System.out.println(" +NORTH: " + north);
-//            bonusBoxes.add(north);
+//            if (bonusBoxes.add(north)) 
+//              System.out.println(" +NORTH: " + north);
+            bonusBoxes.add(north);
           }
           
           Box east = _tower.getAdjacent(box, Adjacent.MR);
           if (east != null && east.hasValue()) {
-            if (bonusBoxes.add(east))
-              System.out.println(" +EAST: " + east);
-//            bonusBoxes.add(east);
+//            if (bonusBoxes.add(east))
+//              System.out.println(" +EAST: " + east);
+            bonusBoxes.add(east);
           }
           
           Box south = _tower.getAdjacent(box, Adjacent.BM);
           if (south != null && south.hasValue()) {
-            if (bonusBoxes.add(south))
-              System.out.println(" +SOUTH: " + south);
-//            bonusBoxes.add(south);
+//            if (bonusBoxes.add(south))
+//              System.out.println(" +SOUTH: " + south);
+            bonusBoxes.add(south);
           }
           
           Box west = _tower.getAdjacent(box, Adjacent.ML);
           if (west != null && west.hasValue()) {
-            if (bonusBoxes.add(west))
-              System.out.println(" +WEST: " + west);
-//            bonusBoxes.add(west);
+//            if (bonusBoxes.add(west))
+//              System.out.println(" +WEST: " + west);
+            bonusBoxes.add(west);
           }
         }
         
@@ -426,9 +426,9 @@ public class SpellCheat
           for(int column=0; column<columns; column++) {
             Box rowBox = _tower.getBox(row, column);
             if (!rowBox.equals(box)) {
-              if (bonusBoxes.add(rowBox))
-                System.out.println(" +ROW: " + rowBox);
-//              bonusBoxes.add(rowBox);
+//              if (bonusBoxes.add(rowBox))
+//                System.out.println(" +ROW: " + rowBox);
+              bonusBoxes.add(rowBox);
             }
           }
         }
@@ -440,7 +440,7 @@ public class SpellCheat
       
       int ret = acc * len;
       
-      System.out.println(String.format("%s: %s points * %s length = %s", word, acc, len, ret));
+//      System.out.println(String.format("%s: %s points * %s length = %s", word, acc, len, ret));
       
       return ret;
     }
@@ -509,19 +509,26 @@ public class SpellCheat
   public SpellCheat(String dictionaryFile, String towerFile)
     throws Exception
   {
+    System.out.println("Loading...");
+    
     _dictionary = loadDictionary(dictionaryFile);
     _tower = loadTower(towerFile);
+    
+    System.out.println("Searching...");
     
     for(Box box : _tower) {
       //System.out.println("working on " + box);
       search(new Trail(), box, _dictionary);
     }
     
-    System.out.println("Found " + _wordTrails.size() + " words");
+    System.out.println();
+    System.out.println("Found " + _wordTrails.size() + " words, showing the top 10:");
+    System.out.println();
     
     Collections.sort(_wordTrails);
-    
-    for(Trail trail : _wordTrails) {
+   
+    for(int i=0; i<10; i++) {
+      Trail trail = _wordTrails.get(_wordTrails.size()-i-1);
       System.out.println(trail.toDisplay(_tower.getWidth(), _tower.getHeight()));
     }
   }
