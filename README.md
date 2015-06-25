@@ -1,7 +1,7 @@
 spelltower-cheat
 ================
 
-Finds the best words in the iPhone game SpellTower.
+Finds the best words in the iPhone game SpellTower FAST.
 
 Run "java com.monospace.SpellCheat words.txt input.txt"
 
