@@ -424,7 +424,7 @@ public class SpellCheat
         if (box.isRowClearing()) {
           int row = box.getY();
           for(int column=0; column<columns; column++) {
-            Box rowBox = _tower.getBox(row, column);
+            Box rowBox = _tower.getBox(column, row);
             if (!rowBox.equals(box)) {
 //              if (bonusBoxes.add(rowBox))
 //                System.out.println(" +ROW: " + rowBox);
